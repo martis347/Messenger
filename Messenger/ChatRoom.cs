@@ -25,6 +25,8 @@ namespace Messenger
             _usersList.Add(user.Username, user);
             _usersOnline = 1;
 
+            _newMessages.Add(user.Username, "");
+
             _display = new RoomDisplay();
         }
 
@@ -55,7 +57,7 @@ namespace Messenger
         {
             foreach (var users in _usersList.Where(users => users.Key != user))
             {
-                _newMessages[user] += text;
+                _newMessages[users.Key] += String.Concat(user, ": ", text, "%0D%0A");
             }
         }
 
