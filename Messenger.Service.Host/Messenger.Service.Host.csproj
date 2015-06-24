@@ -56,6 +56,10 @@
       <Project>{543ca172-4333-4929-9575-491831141b0b}</Project>
       <Name>Messenger.WebApi</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Messenger\Messenger.csproj">
+      <Project>{6AF5E653-DAE6-4D93-83C6-094F3699732C}</Project>
+      <Name>Messenger</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

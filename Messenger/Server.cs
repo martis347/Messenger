@@ -24,6 +24,7 @@ namespace Messenger
 
         public void CreateUser(string username)
         {
+            var user = new ChatUser(username,new UserDisplay("NONE",username));
             _users.Add(username,new ChatUser(username, new UserDisplay("NONE",username)));
         }
 

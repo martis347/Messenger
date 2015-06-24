@@ -9,9 +9,7 @@ namespace Messenger
 
         public string CurrentChatRoomName { get; set; }
 
-        public UserDisplay Display { get; private set; }
-
-        private readonly IDisplay _display;
+        public readonly IDisplay Display;
 
         public ChatUser(string username, IDisplay display)
         {
@@ -19,7 +17,7 @@ namespace Messenger
                 throw new Exception("Username is null");
             Username = username;
 
-            _display = display;
+            Display = display;
         }
     }
 }

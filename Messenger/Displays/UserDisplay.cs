@@ -18,11 +18,6 @@ namespace Messenger.Displays
             _username = username;
         }
 
-        public void DisplayMessage(string message)
-        {
-            Write(message);
-        }
-
         public void Write(string message)
         {
             Console.WriteLine(String.Format("{0}: {1}", _username, message));
