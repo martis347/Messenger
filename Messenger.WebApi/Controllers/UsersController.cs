@@ -9,7 +9,7 @@ namespace Messenger.WebApi.Controllers
 {
     public class UsersController : ApiController
     {
-        [HttpPost]
+        [HttpGet]
         public bool CreateUser(string username)
         {
             Singleton.GetServer.CreateUser(username);
@@ -17,7 +17,7 @@ namespace Messenger.WebApi.Controllers
             //TODO: username exists check
         }
 
-        [HttpPost]
+        [HttpGet]
         public bool CreateRoom(string roomName, string username)
         {
             Singleton.GetServer.CreateRoom(roomName, Singleton.GetServer.User(username));
@@ -26,7 +26,7 @@ namespace Messenger.WebApi.Controllers
             //TODO: room name exists check
         }
 
-        [HttpPost]
+        [HttpGet]
         public void JoinRoom(string roomName, string username)
         {
             Singleton.GetServer.Room(roomName).AddUser(Singleton.GetServer.User(username));

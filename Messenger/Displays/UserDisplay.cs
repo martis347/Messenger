@@ -20,6 +20,7 @@ namespace Messenger.Displays
 
         public void Write(string message)
         {
+            Singleton.GetServer.Room(_chatRoom).
             Console.WriteLine(String.Format("{0}: {1}", _username, message));
         }
     }
