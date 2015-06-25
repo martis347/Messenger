@@ -56,7 +56,7 @@ namespace Messenger
                 _usersList.Remove(user.Username);
                 return RequestStatus.Success;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RequestStatus.UserNotFound;
             }

@@ -4,7 +4,7 @@ using Microsoft.Owin.Hosting;
 
 namespace Messenger.Service.Host
 {
-    class Program
+    static class Program
     {
         static void Main()
         {

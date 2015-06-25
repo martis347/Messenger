@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using Messenger.Displays;
 
 namespace Messenger
@@ -41,10 +40,10 @@ namespace Messenger
             var user = new ChatUser(username,new UserDisplay("NONE",username));
             try
             {
-                _users.Add(username, new ChatUser(username, new UserDisplay("NONE", username)));
+                _users.Add(username,user);
                 return RequestStatus.Success;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RequestStatus.UserAlreadyExists;
             }
@@ -57,7 +56,7 @@ namespace Messenger
                 ChatRoom room = _chatRooms[name];
                 return room;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -69,7 +68,7 @@ namespace Messenger
                 ChatUser user = _users[name];
                 return user;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }

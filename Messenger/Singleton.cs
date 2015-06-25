@@ -3,7 +3,7 @@
     public sealed class Singleton
     {
         private static readonly Singleton Instance = new Singleton();
-        public Server Server {get; private set; }
+        private Server Server {get; set; }
 
 	    static Singleton()
 	    {

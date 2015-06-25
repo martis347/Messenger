@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Http;
+﻿using System.Web.Http;
 
 namespace Messenger.WebApi.Controllers
 {
@@ -8,7 +7,7 @@ namespace Messenger.WebApi.Controllers
         [HttpGet]
         public string Abc()
         {
-            return "Fuck you\nsdfcdsfdsf";
+            return "This \nis\ntest";
         }
     }
 }
