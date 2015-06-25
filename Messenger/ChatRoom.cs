@@ -68,11 +68,16 @@ namespace Messenger
             }
         }
 
-        public string GiveText(string user)
+        public ChatInfo GiveText(string user)
         {
-            string text = _newMessages[user];
+            ChatInfo chatInfo = new ChatInfo
+            {
+                NewMessages = _newMessages[user],
+                UsersInRoom = _usersOnline,
+                Status = HttpStatusCode.OK
+            };
             _newMessages[user] = "";
-            return text;
+            return chatInfo;
         }
 
         private bool RoomHasSpace()

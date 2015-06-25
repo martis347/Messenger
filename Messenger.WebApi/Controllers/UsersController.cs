@@ -19,18 +19,34 @@ namespace Messenger.WebApi.Controllers
         [HttpGet]
         public HttpStatusCode CreateRoom(string roomName, string username)
         {
-            HttpStatusCode status = Singleton.GetServer.CreateRoom(roomName, Singleton.GetServer.User(username));
+            ChatUser user = Singleton.GetServer.User(username);
+            if(user == null)
+                return HttpStatusCode.NoContent;
+
+            HttpStatusCode status = Singleton.GetServer.CreateRoom(roomName, user);
+
             if(status == HttpStatusCode.OK)
                 Singleton.GetServer.User(username).CurrentChatRoomName = roomName;
+
             return status;
         }
 
         [HttpGet]
         public HttpStatusCode JoinRoom(string roomName, string username)
         {
-            HttpStatusCode status = Singleton.GetServer.Room(roomName).AddUser(Singleton.GetServer.User(username));
+            ChatUser user = Singleton.GetServer.User(username);
+            if (user == null)
+                return HttpStatusCode.NoContent;
+
+            ChatRoom room = Singleton.GetServer.Room(roomName);
+            if (room == null)
+                return HttpStatusCode.NoContent;
+
+            HttpStatusCode status = room.AddUser(user);
+
             if (status == HttpStatusCode.OK)
                 Singleton.GetServer.User(username).CurrentChatRoomName = roomName;
+
             return status;
         }
 

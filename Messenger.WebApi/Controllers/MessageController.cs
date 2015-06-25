@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Web.Http;
 
 namespace Messenger.WebApi.Controllers
@@ -6,15 +7,24 @@ namespace Messenger.WebApi.Controllers
     public class MessageController : ApiController
     {
         [HttpGet]
-        public void Send(string message,string roomName, string username)
+        public HttpStatusCode Send(string message, string username)
         {
-            Singleton.GetServer.User(username).Display.Write(message);
+            ChatUser user = Singleton.GetServer.User(username);
+            if (user == null)
+                return HttpStatusCode.NoContent;
+
+            user.Display.Write(message);
+            return HttpStatusCode.OK;
         }
 
         [HttpGet]
-        public string GetText(string userName, string roomName)
+        public ChatInfo GetText(string userName, string roomName)
         {
-            return Singleton.GetServer.Room(roomName).GiveText(userName);
+            ChatRoom room = Singleton.GetServer.Room(roomName);
+            if (room == null)
+                return new ChatInfo() { Status = HttpStatusCode.NotFound };
+
+            return room.GiveText(userName);
         }
     }
 }

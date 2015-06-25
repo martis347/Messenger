@@ -44,11 +44,27 @@ namespace Messenger
 
         public ChatRoom Room(string name)
         {
-            return _chatRooms[name];
+            try
+            {
+                ChatRoom room = _chatRooms[name];
+                return room;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
         public ChatUser User(string name)
         {
-            return _users[name];
+            try
+            {
+                ChatUser user = _users[name];
+                return user;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
     }
 }
