@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
 using Messenger.Displays;
 
 namespace Messenger
@@ -8,13 +10,17 @@ namespace Messenger
         private readonly Dictionary<string, ChatRoom> _chatRooms = new Dictionary<string, ChatRoom>();
         private readonly Dictionary<string, ChatUser> _users = new Dictionary<string, ChatUser>();
 
-        public Server()
+        public HttpStatusCode CreateRoom(string roomName, ChatUser user)
         {
-        }
-
-        public void CreateRoom(string roomName, ChatUser user)
-        {
-            _chatRooms.Add(roomName, new ChatRoom(roomName, user));
+            try
+            {
+                _chatRooms.Add(roomName, new ChatRoom(roomName, user));
+                return HttpStatusCode.OK;
+            }
+            catch (Exception)
+            {
+                return HttpStatusCode.Conflict;
+            }
         }
 
         public void RemoveRoom(string roomName)
@@ -22,10 +28,18 @@ namespace Messenger
             _chatRooms.Remove(roomName);
         }
 
-        public void CreateUser(string username)
+        public HttpStatusCode CreateUser(string username)
         {
             var user = new ChatUser(username,new UserDisplay("NONE",username));
-            _users.Add(username,new ChatUser(username, new UserDisplay("NONE",username)));
+            try
+            {
+                _users.Add(username, new ChatUser(username, new UserDisplay("NONE", username)));
+                return HttpStatusCode.OK;
+            }
+            catch (Exception e)
+            {
+                return HttpStatusCode.Conflict;
+            }
         }
 
         public ChatRoom Room(string name)

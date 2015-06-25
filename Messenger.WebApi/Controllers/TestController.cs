@@ -6,10 +6,9 @@ namespace Messenger.WebApi.Controllers
     public class TestController: ApiController
     {
         [HttpGet]
-        public string Get()
+        public string Abc()
         {
-            Console.WriteLine("dfgdg");
-            return "Fuck you";
+            return "Fuck you\nsdfcdsfdsf";
         }
     }
 }

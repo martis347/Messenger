@@ -17,13 +17,13 @@ namespace Messenger.Service.Host
                 Singleton.GetServer.CreateUser("A");
                 Singleton.GetServer.CreateUser("B");
                 Singleton.GetServer.CreateUser("C");
-                Singleton.GetServer.Room("aba").AddUser(Singleton.GetServer.User("A"));
+                Singleton.GetServer.CreateRoom("ona", Singleton.GetServer.User("A"));
+                Singleton.GetServer.Room("ona").AddUser(Singleton.GetServer.User("B"));
                 Singleton.GetServer.Room("aba").AddUser(Singleton.GetServer.User("C"));
-                Singleton.GetServer.Room("aba").AddUser(Singleton.GetServer.User("B"));
 
-                Singleton.GetServer.Room("aba").AddNewText("testing ababa", "A");
-                Singleton.GetServer.Room("aba").AddNewText("testing 2", "B");
-                Singleton.GetServer.Room("aba").AddNewText("testing 34", "C");
+                Singleton.GetServer.Room("ona").AddNewText("testing bad2", "A");
+                Singleton.GetServer.Room("ona").AddNewText("testing bad", "B");
+                Singleton.GetServer.Room("aba").AddNewText("testing good", "C");
 
                 Console.ReadLine();
                 Singleton.GetServer.Room("aba").AddNewText("testukas","D");

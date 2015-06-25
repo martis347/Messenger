@@ -10,27 +10,28 @@ namespace Messenger.WebApi.Controllers
     public class UsersController : ApiController
     {
         [HttpGet]
-        public bool CreateUser(string username)
+        public HttpStatusCode CreateUser(string username)
         {
-            Singleton.GetServer.CreateUser(username);
-            return true;
-            //TODO: username exists check
+            HttpStatusCode status = Singleton.GetServer.CreateUser(username);
+            return status;
         }
 
         [HttpGet]
-        public bool CreateRoom(string roomName, string username)
+        public HttpStatusCode CreateRoom(string roomName, string username)
         {
-            Singleton.GetServer.CreateRoom(roomName, Singleton.GetServer.User(username));
-            Singleton.GetServer.User(username).CurrentChatRoomName = roomName;
-            return true;
-            //TODO: room name exists check
+            HttpStatusCode status = Singleton.GetServer.CreateRoom(roomName, Singleton.GetServer.User(username));
+            if(status == HttpStatusCode.OK)
+                Singleton.GetServer.User(username).CurrentChatRoomName = roomName;
+            return status;
         }
 
         [HttpGet]
-        public void JoinRoom(string roomName, string username)
+        public HttpStatusCode JoinRoom(string roomName, string username)
         {
-            Singleton.GetServer.Room(roomName).AddUser(Singleton.GetServer.User(username));
-            Singleton.GetServer.User(username).CurrentChatRoomName = roomName;
+            HttpStatusCode status = Singleton.GetServer.Room(roomName).AddUser(Singleton.GetServer.User(username));
+            if (status == HttpStatusCode.OK)
+                Singleton.GetServer.User(username).CurrentChatRoomName = roomName;
+            return status;
         }
 
     }

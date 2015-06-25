@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Messenger.Displays;
 
 namespace Messenger
@@ -30,17 +31,23 @@ namespace Messenger
             _display = new RoomDisplay();
         }
 
-        public bool AddUser(ChatUser user)
+        public HttpStatusCode AddUser(ChatUser user)
         {
-            if (RoomHasSpace())
+            if (!RoomHasSpace())
+                return HttpStatusCode.Forbidden;
+
+            try
             {
                 _usersList.Add(user.Username, user);
-                _newMessages.Add(user.Username,"");
+                _newMessages.Add(user.Username, "");
                 _usersOnline++;
                 _display.Write(DisplayCommands.NewUserAdded(user.Username));
-                return true;
+                return HttpStatusCode.OK;
             }
-            return false;
+            catch (Exception e)
+            {
+                return HttpStatusCode.Conflict;
+            }
         }
 
         public bool RemoveUser(ChatUser user)
