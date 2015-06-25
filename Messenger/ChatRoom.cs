@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using Messenger.Displays;
 
 namespace Messenger
@@ -13,10 +12,8 @@ namespace Messenger
         private readonly string _chatRoomName;
 
         private const int USERS_LIMIT = 5;
-        private int _usersOnline;
 
-
-        private readonly IDisplay _display; //= new RoomDisplay(); { get; private set; }
+        private readonly IDisplay _display;
 
         public ChatRoom(string chatRoomName, ChatUser user)
         {
@@ -24,47 +21,59 @@ namespace Messenger
                 throw new Exception("Chat room name is null");
             _chatRoomName = chatRoomName;
             _usersList.Add(user.Username, user);
-            _usersOnline = 1;
 
             _newMessages.Add(user.Username, "");
 
             _display = new RoomDisplay();
         }
 
-        public HttpStatusCode AddUser(ChatUser user)
+        public RequestStatus AddUser(ChatUser user)
         {
             if (!RoomHasSpace())
-                return HttpStatusCode.Forbidden;
+                return RequestStatus.RoomIsFull;
 
             try
             {
                 _usersList.Add(user.Username, user);
                 _newMessages.Add(user.Username, "");
-                _usersOnline++;
-                _display.Write(DisplayCommands.NewUserAdded(user.Username));
-                return HttpStatusCode.OK;
+            }
+            catch (Exception)
+            {
+                return RequestStatus.UserAlreadyExists;
+            }
+
+            _display.Write(DisplayCommands.NewUserAdded(user.Username));
+
+            return RequestStatus.Success;
+        }
+
+        public RequestStatus RemoveUser(ChatUser user)
+        {
+            if (_usersList.Count <= 0)
+                return RequestStatus.RoomIsEmpty;
+            try
+            {
+                _usersList.Remove(user.Username);
+                return RequestStatus.Success;
             }
             catch (Exception e)
             {
-                return HttpStatusCode.Conflict;
+                return RequestStatus.UserNotFound;
             }
-        }
-
-        public bool RemoveUser(ChatUser user)
-        {
-            if(_usersOnline<=0)
-                return false;
-
-            _usersList.Remove(user.Username);
-            _usersOnline--;
-            return true;
         }
 
         public void AddNewText(string text,string user)
         {
-            foreach (var users in _usersList.Where(users => users.Key != user))
+            try
             {
-                _newMessages[users.Key] += String.Concat(user, ": ", text, "%0D%0A");
+                foreach (var users in _usersList.Where(users => users.Key != user))
+                {
+                    _newMessages[users.Key] += String.Concat(user, ": ", text, "%0D%0A");
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception("Unable to add new text for all users");
             }
         }
 
@@ -73,8 +82,8 @@ namespace Messenger
             ChatInfo chatInfo = new ChatInfo
             {
                 NewMessages = _newMessages[user],
-                UsersInRoom = _usersOnline,
-                Status = HttpStatusCode.OK
+                UsersInRoom = _usersList.Count,
+                Status = RequestStatus.Success
             };
             _newMessages[user] = "";
             return chatInfo;
@@ -82,7 +91,7 @@ namespace Messenger
 
         private bool RoomHasSpace()
         {
-            return (_usersOnline < USERS_LIMIT);
+            return (_usersList.Count < USERS_LIMIT);
         }
 
     }

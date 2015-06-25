@@ -10,35 +10,43 @@ namespace Messenger
         private readonly Dictionary<string, ChatRoom> _chatRooms = new Dictionary<string, ChatRoom>();
         private readonly Dictionary<string, ChatUser> _users = new Dictionary<string, ChatUser>();
 
-        public HttpStatusCode CreateRoom(string roomName, ChatUser user)
+        public RequestStatus CreateRoom(string roomName, ChatUser user)
         {
             try
             {
                 _chatRooms.Add(roomName, new ChatRoom(roomName, user));
-                return HttpStatusCode.OK;
+                return RequestStatus.Success;
             }
             catch (Exception)
             {
-                return HttpStatusCode.Conflict;
+                return RequestStatus.RoomAlreadyExists;
             }
         }
 
-        public void RemoveRoom(string roomName)
+        public RequestStatus RemoveRoom(string roomName)
         {
-            _chatRooms.Remove(roomName);
+            try
+            {
+                _chatRooms.Remove(roomName);
+                return RequestStatus.Success;
+            }
+            catch (Exception)
+            {
+                return RequestStatus.RoomNotFound;
+            }
         }
 
-        public HttpStatusCode CreateUser(string username)
+        public RequestStatus CreateUser(string username)
         {
             var user = new ChatUser(username,new UserDisplay("NONE",username));
             try
             {
                 _users.Add(username, new ChatUser(username, new UserDisplay("NONE", username)));
-                return HttpStatusCode.OK;
+                return RequestStatus.Success;
             }
             catch (Exception e)
             {
-                return HttpStatusCode.Conflict;
+                return RequestStatus.UserAlreadyExists;
             }
         }
 

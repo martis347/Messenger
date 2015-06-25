@@ -10,41 +10,41 @@ namespace Messenger.WebApi.Controllers
     public class UsersController : ApiController
     {
         [HttpGet]
-        public HttpStatusCode CreateUser(string username)
+        public RequestStatus CreateUser(string username)
         {
-            HttpStatusCode status = Singleton.GetServer.CreateUser(username);
+            RequestStatus status = Singleton.GetServer.CreateUser(username);
             return status;
         }
 
         [HttpGet]
-        public HttpStatusCode CreateRoom(string roomName, string username)
+        public RequestStatus CreateRoom(string roomName, string username)
         {
             ChatUser user = Singleton.GetServer.User(username);
             if(user == null)
-                return HttpStatusCode.NoContent;
+                return RequestStatus.UserNotFound;
 
-            HttpStatusCode status = Singleton.GetServer.CreateRoom(roomName, user);
+            RequestStatus status = Singleton.GetServer.CreateRoom(roomName, user);
 
-            if(status == HttpStatusCode.OK)
+            if (status == RequestStatus.Success)
                 Singleton.GetServer.User(username).CurrentChatRoomName = roomName;
 
             return status;
         }
 
         [HttpGet]
-        public HttpStatusCode JoinRoom(string roomName, string username)
+        public RequestStatus JoinRoom(string roomName, string username)
         {
             ChatUser user = Singleton.GetServer.User(username);
             if (user == null)
-                return HttpStatusCode.NoContent;
+                return RequestStatus.UserNotFound;
 
             ChatRoom room = Singleton.GetServer.Room(roomName);
             if (room == null)
-                return HttpStatusCode.NoContent;
+                return RequestStatus.RoomNotFound;
 
-            HttpStatusCode status = room.AddUser(user);
+            RequestStatus status = room.AddUser(user);
 
-            if (status == HttpStatusCode.OK)
+            if (status == RequestStatus.Success)
                 Singleton.GetServer.User(username).CurrentChatRoomName = roomName;
 
             return status;

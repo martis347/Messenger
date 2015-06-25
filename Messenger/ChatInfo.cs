@@ -6,6 +6,6 @@ namespace Messenger
     {
         public string NewMessages { get; set; }
         public int UsersInRoom { get; set; }
-        public HttpStatusCode Status { get; set; }
+        public RequestStatus Status { get; set; }
     }
 }
