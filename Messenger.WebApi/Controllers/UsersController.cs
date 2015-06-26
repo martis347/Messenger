@@ -45,5 +45,21 @@ namespace Messenger.WebApi.Controllers
             return status;
         }
 
+        [HttpGet]
+        public RequestStatus LeaveRoom(string username)
+        {
+            ChatUser user = Singleton.GetServer.User(username);
+            if (user == null)
+                return RequestStatus.UserNotFound;
+
+            ChatRoom room = Singleton.GetServer.Room(user.CurrentChatRoomName);
+            if (room == null)
+                return RequestStatus.RoomNotFound;
+
+            RequestStatus status = room.RemoveUser(user);
+
+            return status;
+        }
+
     }
 }

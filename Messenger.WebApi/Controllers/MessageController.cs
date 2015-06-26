@@ -12,6 +12,13 @@ namespace Messenger.WebApi.Controllers
                 return RequestStatus.UserNotFound;
 
             user.Display.Write(message);
+
+            ChatRoom room = Singleton.GetServer.Room(user.CurrentChatRoomName);
+            if (room == null)
+                return RequestStatus.RoomNotFound;
+
+            room.AddNewText(message, username);
+
             return RequestStatus.Success;
         }
 

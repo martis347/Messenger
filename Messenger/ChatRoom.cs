@@ -68,7 +68,7 @@ namespace Messenger
             {
                 foreach (var users in _usersList.Where(users => users.Key != user))
                 {
-                    _newMessages[users.Key] += String.Concat(user, ": ", text, "%0D%0A");
+                    _newMessages[users.Key] += String.Concat(user, ": ", text);
                 }
             }
             catch (Exception)
