@@ -73,5 +73,18 @@ namespace Messenger
                 return null;
             }
         }
+
+        public RequestStatus RemoveUser(string username)
+        {
+            try
+            {
+                _users.Remove(username);
+                return RequestStatus.Success;
+            }
+            catch (Exception)
+            {
+                return RequestStatus.UserNotFound;
+            }
+        }
     }
 }

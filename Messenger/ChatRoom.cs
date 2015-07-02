@@ -49,17 +49,36 @@ namespace Messenger
 
         public RequestStatus RemoveUser(ChatUser user)
         {
+            RemoveUserFromListOfAllUsers(user);
             if (_usersList.Count <= 0)
+            {
+                RemoveRoomIfEmpty();
                 return RequestStatus.RoomIsEmpty;
+            }
+
             try
             {
                 _usersList.Remove(user.Username);
+                RemoveRoomIfEmpty();
                 return RequestStatus.Success;
             }
             catch (Exception)
             {
                 return RequestStatus.UserNotFound;
             }
+        }
+
+        private void RemoveRoomIfEmpty()
+        {
+            if (_usersList.Count <= 0)
+            {
+                Singleton.GetServer.RemoveRoom(_chatRoomName);
+            }
+        }
+
+        private void RemoveUserFromListOfAllUsers(ChatUser user)
+        {
+            Singleton.GetServer.RemoveUser(user.Username);
         }
 
         public void AddNewText(string text,string user)
