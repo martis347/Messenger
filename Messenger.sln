@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D379F961-DF2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{EB3CE68B-26A2-4CE4-ADBB-130EDFC2EAF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.WebApi.Tests", "tests\ClassLibrary1\Messenger.WebApi.Tests.csproj", "{4E6F2939-0817-44B6-BB0C-A03A3320104E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.WebApi.Tests", "tests\Messenger.WebApi.Tests\Messenger.WebApi.Tests.csproj", "{4E6F2939-0817-44B6-BB0C-A03A3320104E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
