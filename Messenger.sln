@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.WebApi", "Messenger.WebApi\Messenger.WebApi.csproj", "{543CA172-4333-4929-9575-491831141B0B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.WebApi", "src\Messenger.WebApi\Messenger.WebApi.csproj", "{543CA172-4333-4929-9575-491831141B0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Service.Host", "Messenger.Service.Host\Messenger.Service.Host.csproj", "{DA505DB7-E5EE-4F6C-B7A6-EAD796D10E30}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger.Service.Host", "src\Messenger.Service.Host\Messenger.Service.Host.csproj", "{DA505DB7-E5EE-4F6C-B7A6-EAD796D10E30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger", "Messenger\Messenger.csproj", "{6AF5E653-DAE6-4D93-83C6-094F3699732C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messenger", "src\Messenger\Messenger.csproj", "{6AF5E653-DAE6-4D93-83C6-094F3699732C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D379F961-DF28-4599-9694-26909931569B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{31FBC590-7E45-407B-B095-62B7A1268721}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +34,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{543CA172-4333-4929-9575-491831141B0B} = {D379F961-DF28-4599-9694-26909931569B}
+		{DA505DB7-E5EE-4F6C-B7A6-EAD796D10E30} = {D379F961-DF28-4599-9694-26909931569B}
+		{6AF5E653-DAE6-4D93-83C6-094F3699732C} = {D379F961-DF28-4599-9694-26909931569B}
 	EndGlobalSection
 EndGlobal
